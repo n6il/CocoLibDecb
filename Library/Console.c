@@ -360,7 +360,7 @@ char key_number()
 	result = 0xff;
 	b = 0xfe;
 	
-	asm( "emubrk" );
+	// asm( "emubrk" );
 	
 	while( b != 0xff )
 	{

@@ -1,38 +1,28 @@
-# Make test programs
+VPATH = /usr/local/coco/include/:/usr/local/coco/lib/gcc/m6809-unknown/4.6.1
 
-CC = m6809-gcc
-CFLAGS = -Wall -Werror
-LDFLAGS = -lRSDOS
+PATH=/usr/local/coco/bin:$PATH
+CC=/usr/local/coco/bin/m6809-unknown-gcc
+CFLAGS=-Wall -Wa,-l,-s -I /usr/local/coco/include -O0
+LDFLAGS=-Wall -Wl,-M -Wa,-l,-s -L/usr/local/lib/gcc/m6809-coco-none/4.6.1 -L/usr/local/coco/lib -lRSDOS -O0
 
-VPATH = /usr/local/m6809/include/:/usr/local/lib/gcc/m6809/3.4.6/
-
-%.BIN: %.c
-	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS)
-
-
-all: joystick.dsk console.dsk
-
-JOY.BIN: coco_hardware.h ReadJoystick.h crt0.o
-JOY1.BIN: coco_hardware.h ReadJoystick.h crt0.o
-CON.BIN: coco_hardware.h Console.h crt0.o
-CON1.BIN: coco_hardware.h Console.h crt0.o
-CON2.BIN: coco_hardware.h Console.h crt0.o
-CON3.BIN: coco_hardware.h Console.h crt0.o
-CON4.BIN: coco_hardware.h Console.h crt0.o
-
-joystick.dsk: JOY.BIN JOY1.BIN
+%.dsk: %.BIN
+	rm -rf $@
 	decb dskini $@
+	#u="$(echo $^ | awk '{print toupper($0)}')"
 	decb copy -2b $^ $@,
 	decb dir $@,
 
-console.dsk: CONA.BIN CON1.BIN CON2.BIN CON3.BIN CON4.BIN
-	decb dskini $@
-	decb copy -2b $^ $@,
-	decb dir $@,
+%.BIN: %.o
+	$(CC) $(LDFLAGS) -o $@ $<
 
-.PHONY: clean
+%o: %c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+%o: %s
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+%o: %S
+	$(CC) $(CFLAGS) -c -o $@ $<
+
 clean:
-	rm -f *.dsk *.BIN
-	
-	
-
+	rm -f *.o *.a

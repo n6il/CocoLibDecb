@@ -1,4 +1,4 @@
-void _exit( int );
+#include "unistd.h"
 
 void abort()
 {

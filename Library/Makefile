@@ -5,7 +5,7 @@
 #        by tim lindner, 2007
 
 CC = m6809-gcc
-CFLAGS = -Wall -Werror
+CFLAGS = -Wall -L/usr/local/coco/lib -I/usr/local/coco/include
 
 %.a:
 	m6809-ar -rc $@ $^
@@ -15,20 +15,22 @@ all: libc.a libRSDOS.a
 
 ReadJoystick.o: coco_hardware.h ReadJoystick.h
 Console.o: coco_hardware.h Console.h
+Timer.o: Timer.h
 
 # Libraries
-libc.a: libc_exit.o libc_abort.o
-libRSDOS.a: ReadJoystick.o Console.o
+libc.a: libc_exit.o libc_abort.o libc_stdio.o libc_syscalls.o libc_string.o
+#libc.a: libc_exit.o libc_abort.o
+libRSDOS.a: ReadJoystick.o Console.o Timer.o
 
 .PHONY: install
 install:
-	cp -f libc.a /usr/local/m6809/lib/
-	m6809-ar --cache /usr/local/m6809/lib/libc.a
+	cp -f libc.a /usr/local/coco/lib/
+	m6809-ar --cache /usr/local/coco/lib/libc.a
 
-	cp -f libRSDOS.a /usr/local/m6809/lib/
-	m6809-ar --cache /usr/local/m6809/lib/libRSDOS.a
+	cp -f libRSDOS.a /usr/local/coco/lib/
+	m6809-ar --cache /usr/local/coco/lib/libRSDOS.a
 
-	cp -f *.h /usr/local/m6809/include/
+	cp -f *.h /usr/local/coco/include/
 
 .PHONY: clean
 clean:
