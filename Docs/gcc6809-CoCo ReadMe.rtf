@@ -1,0 +1,89 @@
+{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf410
+{\fonttbl\f0\fswiss\fcharset77 Helvetica-Bold;\f1\fswiss\fcharset77 Helvetica;\f2\fmodern\fcharset77 Courier;
+\f3\fnil\fcharset77 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww13380\viewh10920\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qc\pardirnatural
+
+\f0\b\fs36 \cf0 GCC6809/CoCo
+\f1\b0\fs24 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \
+This is a C programming language package tuned for the Tandy Color Computer. This worked is based off the GCC6809 being worked on Brian Dominy at {\field{\*\fldinst{HYPERLINK "http://www.oddchange.com/gcc6809/"}}{\fldrslt GCC6809 - C compiler for the 6809 processor}}. You should become familiar with the compiler he provides, because this document will only describe the changes made for the Color Computer.\
+\
+
+\f0\b\fs28 Supported hosts.
+\f1\b0\fs24 \
+\
+Currently I provide binaries for Mac OS X and CYGWIN. CYGWIN is a unix like environment for Windows.\
+\
+
+\f0\b\fs28 Installation for Max OS X.
+\f1\b0\fs24 \
+\
+1. Install the Xcode developer tools package by signing up for a free account at {\field{\*\fldinst{HYPERLINK "https://connect.apple.com/cgi-bin/WebObjects/MemberSite.woa/wa/promo?source=ADCLOG&code=ADCLOG-NEX"}}{\fldrslt Apple Developer Connection}} and downloading it.\
+2. Double click the gcc6809-CoCo-*.dmg file to mount it.\
+3. Double click the gcc6809-3.4.6-CoCo-*.pkg file to install the compiler.\
+4. Drag the Programs folder to a convenient place on you computer.\
+5. Open a terminal window and add the "/usr/local/bin" path to your executable path. I do this by writing the follownng to the .profile file in my home directory:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li640\fi320\ql\qnatural\pardirnatural
+
+\f2 \cf0 PATH=$PATH:/usr/local/bin\
+export PATH\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 6. Change your directory to the Tests folder of the Programs folder from the dmg file.\
+7. Type make to build the test programs. The C programs are compiled into BIN files and placed on a disk image ready to be used with the emulator or transfered to a real floppy.\
+\
+
+\f0\b\fs28 Installation for CYGWIN on Windows.
+\f1\b0\fs24 \
+\
+1. Install CYGWIN as described by http://www.cygwin.com/.\
+2. Install GNU Make and unzip using SETUP.EXE\
+3. Startup a bash shell and unzip the gcc6809-CoCo-*.zip file\
+4. Copy the 
+\f3 gcc6809-3.4.6-cygwin-CoCo-*-bin.tar.gz from the ZIP file to the root directory\
+5. Change to the root directory and extract the contents of the tarball using the command:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li980\fi-20\ql\qnatural\pardirnatural
+
+\f2 \cf0 tar xzvf gcc6809-3.4.6-cygwin-CoCo-*-bin.tar.gz
+\f3 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 (Remember the * represents the date release. Be sure to type the actual filename.\
+6. Change to the Tests directory of the Programs directory extracted from the ZIP file.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 7. Type 
+\f2 make
+\f1  to build the test programs. The C programs are compiled into BIN files and placed on a disk image ready to be used with the emulator or transfered to a real floppy.\
+\
+
+\f0\b\fs28 Release Notes.
+\f1\b0\fs24 \
+\
+\'a5 The binaries are meant to be loaded on the CoCo using the 
+\f2 LOADM
+\f1  command. They are meant to be started using the 
+\f2 EXEC
+\f1  command. No need to specify the execution address.\
+\
+\'a5 The binaries produced by the compiler live at $4000 in RAM. The start up code inserted into your program sets the stack pointer at $6000, and switches to all-ram mode. This removes BASIC. When your program finishes, BASIC is brought back in and cold started.\
+\
+\'a5 Two libraries are being provided: libc and libRSDOS. The current libc is very minimal. Feel free to write more functions for it that are compatible with Standard C.  LibRSDOS contains functions specific to the Color Computer. Currently it is very small. Feel free to write more functions that can become part of libRSDOS.\
+\
+\'a5 These libraries live in the Library folder in the Programs folder. If you make changes to them you'll need to 
+\f2 make
+\f1  them, and then 
+\f2 make install
+\f1  them. You'll need to use 
+\f2 sudo make install
+\f1  on the Mac.\
+\
+\
+Prepared by:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\fi420\ql\qnatural\pardirnatural
+\cf0 tim lindner\
+tlindner@macmess.org\
+{\field{\*\fldinst{HYPERLINK "http://tlindner.macmess.org/"}}{\fldrslt Frakendirary}}\
+}
